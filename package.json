@@ -11,6 +11,7 @@
   "dependencies": {
     "express": "^4.16.4",
     "nodemon": "^2.0.20",
+    "taskkill": "^5.0.0",
     "uuid": "^9.0.0"
   }
 }
