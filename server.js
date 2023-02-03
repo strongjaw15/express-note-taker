@@ -37,7 +37,7 @@ app.post('/api/notes', (req, res) => {
     noteId: uuidv4()
   };
   console.log({newNote});
-  fs.readFileSync('./db/db.json', 'utf8', (err, data) => {
+  fs.readFile('./db/db.json', 'utf8', (err, data) => {
     if (err) {
       console.log(err)
     } else {
@@ -45,13 +45,13 @@ app.post('/api/notes', (req, res) => {
       const notes = JSON.parse(data);
       notes.push(newNote);
       console.log('note pushed');
-      fs.writeFileSync('./db/db.json', JSON.stringify(notes), (err) => {
+      fs.writeFile('./db/db.json', JSON.stringify(notes), (err) => {
         if(err){
           console.log(err)
         } else {
           console.log('success');
           console.log({database});
-          res.status(201).json()
+          res.status(201).json(notes)
         }
       })
     }
