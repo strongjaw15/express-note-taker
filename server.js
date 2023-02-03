@@ -29,50 +29,35 @@ app.get('/api/notes', (req, res) => {
 
 // This is the route for post notes.
 app.post('/api/notes', (req, res) => {
-  console.log('req body: ', req.body)
-  
-  const {title, text} = req.body
+  console.log('req body: ', req.body);
+  const {title, text} = req.body;
   const newNote = {
     title,
     text,
     noteId: uuidv4()
-  }
-  console.log({newNote})
-
-  // const notes = JSON.parse(fs.readFile(database))
-  // notes.push(newNote)
-  // fs.writeFile(database, JSON.stringify(notes))
-  // fs.writeFile(database, JSON.stringify(JSON.parse(fs.readFile(database)).push(newNote)))
-
-  fs.readFile('./db/db.json', 'utf8', (err, data) => {
+  };
+  console.log({newNote});
+  fs.readFileSync('./db/db.json', 'utf8', (err, data) => {
     if (err) {
       console.log(err)
     } else {
+      console.log('file read');
       const notes = JSON.parse(data);
       notes.push(newNote);
-      fs.writeFile('./db/db.json', JSON.stringify(notes), (newErr) => {
-        newErr ? console.log(newErr) : console.log('success')
+      console.log('note pushed');
+      fs.writeFileSync('./db/db.json', JSON.stringify(notes), (err) => {
+        if(err){
+          console.log(err)
+        } else {
+          console.log('success');
+          console.log({database});
+          res.status(201).json()
+        }
       })
     }
   })
-  console.log({database})
-  
-  res.status(201)
 })
 
-// This writes the notes to the database.
-// const postNotes = req => {
-//   const {title, text} = req.body
-//   const newNote = {
-//     title,
-//     text,
-//     noteId: uuidv4()
-//   }
-//   const notes = JSON.parse(fs.readFile(database))
-//   notes.push(newNote)
-//   fs.writeFile(database, JSON.stringify(notes))
-//   return json(notes)
-// }
 
 // Catch-all route -- must be last in the list of routes
 app.get("*", (req, res) => 
