@@ -2,7 +2,7 @@ const express = require('express');
 const fs = require('fs')
 const { v4: uuidv4 } = require('uuid')
 const path = require('path');
-const database = require('./db/db.json')
+// const database = require('./db/db.json')
 
 const app = express(); 
 const PORT = process.env.PORT || 3001;
@@ -24,7 +24,13 @@ app.get('/notes', (req, res) => {
 
 // This is the route for get api notes.
 app.get('/api/notes', (req, res) => {
-  res.json(database)
+  console.log('get req body', req.body);
+  fs.readFile('./db/db.json', (err, data) => {
+    if (err){
+      console.log(err)
+    } else {
+    res.json(JSON.parse(data))}
+  })
 })
 
 // This is the route for post notes.
@@ -34,7 +40,7 @@ app.post('/api/notes', (req, res) => {
   const newNote = {
     title,
     text,
-    noteId: uuidv4()
+    id: uuidv4()
   };
   console.log({newNote});
   fs.readFile('./db/db.json', 'utf8', (err, data) => {
@@ -50,7 +56,7 @@ app.post('/api/notes', (req, res) => {
           console.log(err)
         } else {
           console.log('success');
-          console.log({database});
+          console.log({notes});
           res.status(201).json(notes)
         }
       })
