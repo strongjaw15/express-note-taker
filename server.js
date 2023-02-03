@@ -29,7 +29,7 @@ app.get('/api/notes', (req, res) => {
 
 // This is the route for post notes.
 app.post('/api/notes', (req, res) => {
-  console.log(req.body)
+  console.log('req body: ', req.body)
   
   const {title, text} = req.body
   const newNote = {
@@ -37,11 +37,13 @@ app.post('/api/notes', (req, res) => {
     text,
     noteId: uuidv4()
   }
-  console.log(newNote)
+  console.log({newNote})
+
   // const notes = JSON.parse(fs.readFile(database))
   // notes.push(newNote)
   // fs.writeFile(database, JSON.stringify(notes))
   // fs.writeFile(database, JSON.stringify(JSON.parse(fs.readFile(database)).push(newNote)))
+
   fs.readFile('./db/db.json', 'utf8', (err, data) => {
     if (err) {
       console.log(err)
@@ -53,7 +55,7 @@ app.post('/api/notes', (req, res) => {
       })
     }
   })
-  console.log(database)
+  console.log({database})
   
   res.status(201)
 })
