@@ -10,6 +10,10 @@ This full-stack web app is deployed on heroku and allows the user to write, stor
 
 ## Visuals
 
+![](./assets/images/Screenshot_20230202_112502.png)
+
+![](./assets/images/Screenshot_20230202_112923.png)
+
 ## Link
 https://express-note-taker2.herokuapp.com/
 
